@@ -2,17 +2,17 @@
    ------------------------------ */
 var customToggle = document.getElementById("nav-toggle");
 var navigation = responsiveNav(".nav-collapse", {
-  customToggle: "#nav-toggle", // Selector: Specify the ID of a custom toggle
-  enableFocus: true,
-  enableDropdown: true,
-  openDropdown: '<span class="screen-reader-text">Open sub menu</span>',
-  closeDropdown: '<span class="screen-reader-text">Close sub menu</span>',
-  resizeMobile: function () {
-    customToggle.setAttribute("aria-controls", "nav");
-  },
-  resizeDesktop: function () {
-    customToggle.removeAttribute("aria-controls");
-  }
+    customToggle: "#nav-toggle", // Selector: Specify the ID of a custom toggle
+    enableFocus: true,
+    enableDropdown: true,
+    openDropdown: '<span class="screen-reader-text">Open sub menu</span>',
+    closeDropdown: '<span class="screen-reader-text">Close sub menu</span>',
+    resizeMobile: function () {
+        customToggle.setAttribute("aria-controls", "nav");
+    },
+    resizeDesktop: function () {
+        customToggle.removeAttribute("aria-controls");
+    }
 });
 
 
@@ -26,106 +26,144 @@ AOS.init();
 
 // Testimonials
 var testimonialsSwiper = new Swiper(".testimonialsSwiper", {
-  spaceBetween: 30,
-  loop: true,
-  pagination: {
-    el: ".swiper-pagination",
-    type: "fraction",
-    renderFraction: function (currentClass, totalClass) {
-      return (
-        '<span class="' +
-        currentClass +
-        '"></span>' +
-        "&nbsp;of&nbsp;" +
-        '<span class="' +
-        totalClass +
-        '"></span>'
-      );
-    }
-  },
-  navigation: {
-    nextEl: ".swiper-button-next"
-  }
-});
+    spaceBetween: 30,
+    loop: true,
+    pagination: {
+        el: ".swiper-pagination",
+        type: "fraction",
+        renderFraction: function (currentClass, totalClass) {
+            return (
+                '<span class="' + currentClass + '"></span>' + "&nbsp;of&nbsp;" + '<span class="' + totalClass + '"></span>'
+                );
+            }
+        },
+        navigation: {
+            nextEl: ".swiper-button-next"
+        }
+    });
 
 // Courses
-	    var swiper = new Swiper('.courseSwiper', {
-      pagination: {
+var swiper = new Swiper('.courseSwiper', {
+        slidesPerView: 1,
+        spaceBetween: 25,
+    pagination: {
         el: '.courseSwiper__pagination',
         clickable: true,
-      },
-    });
+    },
+});
 
 // Resources
-	    var swiper = new Swiper('.resourcesSwiper', {
-        pagination: {
-        slidesPerView: 3,
-        spaceBetween: 30,
+var swiper = new Swiper('.resourceDescSwiper', {
+        slidesPerView: 1,
+        spaceBetween: 25,
+    pagination: {
         el: '.resourcesSwiper__pagination',
         clickable: true,
-      },
-    });
+    },
+      breakpoints: {
+        781: {
+          slidesPerView: 2,
+          spaceBetween: 40,
+        },
+        1301: {
+          slidesPerView: 3,
+          spaceBetween: 20,
+        },
+      }
+});
+
+var swiper = new Swiper('.resourceImageSwiper', {
+        slidesPerView: 1,
+        spaceBetween: 25,
+    pagination: {
+        el: '.resourcesSwiper__pagination',
+        clickable: true,
+    },
+      breakpoints: {
+        781: {
+          slidesPerView: 2,
+          spaceBetween: 40,
+        },
+        1301: {
+          slidesPerView: 3,
+          spaceBetween: 20,
+        },
+      }
+    //     641: {
+    //       slidesPerView: 2,
+    //       spaceBetween: 20,
+    //     },
+    //     781: {
+    //       slidesPerView: 3,
+    //       spaceBetween: 40,
+    //     },
+    //     1301: {
+    //       slidesPerView: 4,
+    //       spaceBetween: 20,
+    //     },
+    //   }
+});
 
 
 /* Venn diagram animation
    ------------------------------ */
+   
+// Retrieve the prefers-reduced-motion media query.
+const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-    // Retrieve the prefers-reduced-motion media query.
-    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+// Check if the query matches or is not available.
+if (!mediaQuery || mediaQuery.matches) {
+    // Don't set up the animations
+} else {
+    // Set up the animations
+    
+    // Create a script tag to conditionally load the script
+    function loadScript(url, callback) {
+        var body = document.body;
+        var script = document.createElement('script');
+        script.src = url;
+        script.onreadystatechange = callback;
+        script.onload = callback;
+        body.appendChild(script);
+    }
+    
+    var runAOS = function () {
+        // Initialize AOS
+        AOS.init({
+            // Global settings:
+            disable: 'mobile' // accepts following values: 'phone', 'tablet', 'mobile', boolean, expression or function
+            // once: false, // whether animation should happen only once - while scrolling down
+            // mirror: false, // whether elements should animate out while scrolling past them
+        });
+    };
+    
+    // Append the script and run the function
+    // loadScript("https://unpkg.com/aos@next/dist/aos.js", runAOS);
+}
 
-    // Check if the query matches or is not available.
-    if (!mediaQuery || mediaQuery.matches) {
+// Add an event listener to check for changes in the media query value.
+mediaQuery.addEventListener("change", () => {
+    if (mediaQuery.matches) {
         // Don't set up the animations
     } else {
-        // Set up the animations
-
-        // Create a script tag to conditionally load the script
-        function loadScript(url, callback) {
-            var body = document.body;
-            var script = document.createElement('script');
-            script.src = url;
-            script.onreadystatechange = callback;
-            script.onload = callback;
-            body.appendChild(script);
-        }
-
-        var runAOS = function () {
-            // Initialize AOS
-            AOS.init({
-                // Global settings:
-                disable: 'mobile' // accepts following values: 'phone', 'tablet', 'mobile', boolean, expression or function
-                // once: false, // whether animation should happen only once - while scrolling down
-                // mirror: false, // whether elements should animate out while scrolling past them
-            });
-        };
-
-        // Append the script and run the function
-        // loadScript("https://unpkg.com/aos@next/dist/aos.js", runAOS);
+        // No reduced motion preference: set up the animations if desired.
     }
-
-    // Add an event listener to check for changes in the media query value.
-    mediaQuery.addEventListener("change", () => {
-        if (mediaQuery.matches) {
-            // Don't set up the animations
-        } else {
-            // No reduced motion preference: set up the animations if desired.
-        }
-    });
+});
 
 
 /* Toggle Guides snippet
    ------------------------------ */
    
 var toggleSnippet = function (elem) {
-	elem.classList.toggle('is-visible');
+    elem.classList.toggle('is-visible');
 };
 
 document.addEventListener('click', function (event) {
-	if (!event.target.classList.contains('toggle')) return;
-	// Prevent default link behavior
-	event.preventDefault();
-	var content = document.querySelector(event.target.hash);
-	if (!content) return;
+    if (!event.target.classList.contains('toggle')) return;
+    // Prevent default link behavior
+    event.preventDefault();
+    var content = document.querySelector(event.target.hash);
+    if (!content) return;
     toggleSnippet(content);
 }, false);
 
@@ -139,7 +177,7 @@ function changeToggleText1(){
  function changeToggleText2(){ 
     var snippet2 = document.getElementById("toggleText2");
     snippet2.classList.toggle("toggleActive");
-  };
+};
 
 
 /* A11y modal
@@ -148,12 +186,12 @@ function changeToggleText1(){
 /* global NodeList, Element, define */
 
 (function (global) {
-  'use strict';
-
-  var FOCUSABLE_ELEMENTS = ['a[href]', 'area[href]', 'input:not([disabled])', 'select:not([disabled])', 'textarea:not([disabled])', 'button:not([disabled])', 'iframe', 'object', 'embed', '[contenteditable]', '[tabindex]:not([tabindex^="-"])'];
-  var TAB_KEY = 9;
-  var ESCAPE_KEY = 27;
-  var focusedBeforeDialog;
+    'use strict';
+    
+    var FOCUSABLE_ELEMENTS = ['a[href]', 'area[href]', 'input:not([disabled])', 'select:not([disabled])', 'textarea:not([disabled])', 'button:not([disabled])', 'iframe', 'object', 'embed', '[contenteditable]', '[tabindex]:not([tabindex^="-"])'];
+    var TAB_KEY = 9;
+    var ESCAPE_KEY = 27;
+    var focusedBeforeDialog;
 
   /**
    * Define the constructor to instantiate a dialog
@@ -605,15 +643,30 @@ function changeToggleText1(){
 
 /* Card link utility
    ------------------------------ */
-   const cards = document.querySelectorAll('.card');
-   Array.prototype.forEach.call(cards, card => {
-       let down, up, link = card.querySelector('a');
-       card.style.cursor = 'pointer';
-       card.onmousedown = () => down = +new Date();
-       card.onmouseup = () => {
-           up = +new Date();
-           if ((up - down) < 200) {
-               link.click();
-            }
+const cards = document.querySelectorAll('.card');
+Array.prototype.forEach.call(cards, card => {
+    let down, up, link = card.querySelector('a');
+    card.style.cursor = 'pointer';
+    card.onmousedown = () => down = +new Date();
+    card.onmouseup = () => {
+        up = +new Date();
+        if ((up - down) < 200) {
+            link.click();
         }
+    }
+});
+
+
+/* Add active class to consulting option
+   ------------------------------ */
+var header = document.getElementById("consultingSelectList");
+var items = header.getElementsByClassName("consultingOption");
+for (var i = 0; i < items.length; i++) {
+    items[i].addEventListener("click", function() {
+        var current = document.getElementsByClassName("activeOption");
+        if (current.length > 0) { 
+            current[0].className = current[0].className.replace(" activeOption", "");
+        }
+        this.className += " activeOption";
     });
+}
